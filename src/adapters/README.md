@@ -2,8 +2,9 @@
 
 ## Intended Responsibilities
 
-Add SQLite persistence, libcurl transport, direct HTTP/JSON AI clients, and marketplace
-collectors here as needed. Keep vendor-specific formats and errors behind small interfaces
+SQLite listing persistence is implemented in [persistence/](persistence/README.md). Add
+libcurl transport, direct HTTP/JSON AI clients, and marketplace collectors as needed.
+Keep vendor-specific formats and errors behind small interfaces
 that serve core workflows. Validate model output before passing it to business logic.
 
 Integrations must handle missing data, timeouts, access constraints, and partial failures.

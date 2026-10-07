@@ -1,0 +1,4 @@
+#pragma once
+namespace sniff::persistence {
+inline constexpr const char* schema_sql = R"sniffsql(@SNIFF_SCHEMA_SQL@)sniffsql";
+}

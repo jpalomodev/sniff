@@ -6,8 +6,10 @@ requirements and [AGENTS.md](AGENTS.md) for engineering guidance. Both are livin
 
 ## Current State
 
-This is a buildable project skeleton. The executable supports help and version output;
-discovery, identification, valuation, persistence, and transaction workflows are pending.
+The core library includes a validated Listing model, and file-backed SQLite storage can
+save and reload listing snapshots. The executable supports help, version output, and
+`init-db --path data/sniff.db`. Discovery, identification, valuation, and transaction
+workflows are pending.
 No marketplace or AI provider has been selected.
 
 ## Current Stack
@@ -44,6 +46,7 @@ cmake --build --preset debug
 ctest --preset debug
 ./build/debug/sniff --help
 ./build/debug/sniff --version
+./build/debug/sniff init-db --path data/sniff.db
 ```
 
 The `release` configure/build/test presets use a separate `build/release` directory.
@@ -71,8 +74,8 @@ src/
 tests/          Offline Catch2 tests and CLI smoke checks
 ```
 
-Core and adapter directories currently document intended boundaries. Add compiled targets
-when they contain actual behavior. Keep identification independent of valuation, and
+The `sniff_core` library contains the Listing model, and `sniff_persistence` provides
+[SQLite listing storage](src/adapters/persistence/README.md). Keep identification independent of valuation, and
 source-specific code independent of core rules. Add `workers/` only if a browser sidecar
 is needed; no Node dependencies are installed now.
 
@@ -85,7 +88,7 @@ forcing warnings-as-errors on third-party dependencies.
 
 Name test files `*_test.cpp`. Tests must run without live marketplaces or model APIs.
 The initial suite checks CLI behavior, SQLite/JSON evidence round-tripping, and libcurl
-initialization. These verify the scaffold, not an implemented sourcing workflow. As logic
+initialization, Listing validation, and SQLite snapshot persistence and recovery. As logic
 is added, prioritize financial correctness, malformed input, uncertainty, and recovery.
 Catch2 cases are registered with CTest using
 [Catch2's CMake integration](https://catch2-temp.readthedocs.io/en/latest/cmake-integration.html).

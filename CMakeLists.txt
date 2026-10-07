@@ -21,8 +21,20 @@ target_compile_options(sniff_project_options INTERFACE
     $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall;-Wextra;-Wpedantic>
 )
 
+add_library(sniff_core src/core/listing.cpp)
+target_include_directories(sniff_core PUBLIC "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(sniff_core PUBLIC sniff_project_options)
+
+file(READ "${PROJECT_SOURCE_DIR}/src/adapters/persistence/schema.sql" SNIFF_SCHEMA_SQL)
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+    "${PROJECT_SOURCE_DIR}/src/adapters/persistence/schema.sql")
+configure_file(src/adapters/persistence/schema.hpp.in generated/schema.hpp @ONLY)
+add_library(sniff_persistence src/adapters/persistence/listing_database.cpp)
+target_include_directories(sniff_persistence PRIVATE "${PROJECT_BINARY_DIR}/generated")
+target_link_libraries(sniff_persistence PUBLIC sniff_core PRIVATE unofficial::sqlite3::sqlite3)
+
 add_executable(sniff src/cli/main.cpp)
-target_link_libraries(sniff PRIVATE sniff_project_options CLI11::CLI11 spdlog::spdlog)
+target_link_libraries(sniff PRIVATE sniff_project_options sniff_persistence CLI11::CLI11 spdlog::spdlog)
 target_compile_definitions(sniff PRIVATE SNIFF_VERSION="${PROJECT_VERSION}")
 
 if(BUILD_TESTING)
