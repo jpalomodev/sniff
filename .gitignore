@@ -1,0 +1,15 @@
+/build/
+/vcpkg_installed/
+/.tools/
+/CMakeUserPresets.json
+/.cache/
+/compile_commands.json
+/.env
+/.env.*
+!/.env.example
+/data/
+/secrets/
+*.db
+*.db-shm
+*.db-wal
+*.log

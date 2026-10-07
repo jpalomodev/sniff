@@ -1,0 +1,19 @@
+{
+  "name": "sniff",
+  "version-semver": "0.1.0",
+  "description": "Private resale intelligence for professional electronics",
+  "builtin-baseline": "2cfff9c458d9dcf642e9fa09ba624f9931bb5358",
+  "dependencies": [
+    "cli11",
+    { "name": "curl", "default-features": false, "features": ["ssl"] },
+    "nlohmann-json",
+    "spdlog",
+    "sqlite3"
+  ],
+  "features": {
+    "tests": {
+      "description": "Offline tests using Catch2",
+      "dependencies": ["catch2"]
+    }
+  }
+}
