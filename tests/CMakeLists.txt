@@ -1,6 +1,7 @@
-add_executable(sniff_tests dependency_smoke_test.cpp)
+add_executable(sniff_tests dependency_smoke_test.cpp listing_test.cpp)
 target_link_libraries(sniff_tests PRIVATE
     sniff_project_options
+    sniff_core
     Catch2::Catch2WithMain
     CURL::libcurl
     nlohmann_json::nlohmann_json

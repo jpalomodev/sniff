@@ -6,7 +6,7 @@ requirements and [AGENTS.md](AGENTS.md) for engineering guidance. Both are livin
 
 ## Current State
 
-This is a buildable project skeleton. The executable supports help and version output;
+The core library includes a validated listing snapshot. The executable supports help and version output;
 discovery, identification, valuation, persistence, and transaction workflows are pending.
 No marketplace or AI provider has been selected.
 
@@ -71,8 +71,8 @@ src/
 tests/          Offline Catch2 tests and CLI smoke checks
 ```
 
-Core and adapter directories currently document intended boundaries. Add compiled targets
-when they contain actual behavior. Keep identification independent of valuation, and
+The `sniff_core` library contains the listing model; adapters currently document intended
+boundaries. Keep identification independent of valuation, and
 source-specific code independent of core rules. Add `workers/` only if a browser sidecar
 is needed; no Node dependencies are installed now.
 
@@ -85,7 +85,8 @@ forcing warnings-as-errors on third-party dependencies.
 
 Name test files `*_test.cpp`. Tests must run without live marketplaces or model APIs.
 The initial suite checks CLI behavior, SQLite/JSON evidence round-tripping, and libcurl
-initialization. These verify the scaffold, not an implemented sourcing workflow. As logic
+initialization, plus listing evidence preservation, missing data, and validation. These
+do not constitute an implemented sourcing workflow. As logic
 is added, prioritize financial correctness, malformed input, uncertainty, and recovery.
 Catch2 cases are registered with CTest using
 [Catch2's CMake integration](https://catch2-temp.readthedocs.io/en/latest/cmake-integration.html).

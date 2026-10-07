@@ -21,6 +21,10 @@ target_compile_options(sniff_project_options INTERFACE
     $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall;-Wextra;-Wpedantic>
 )
 
+add_library(sniff_core src/core/listing.cpp)
+target_include_directories(sniff_core PUBLIC "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(sniff_core PUBLIC sniff_project_options)
+
 add_executable(sniff src/cli/main.cpp)
 target_link_libraries(sniff PRIVATE sniff_project_options CLI11::CLI11 spdlog::spdlog)
 target_compile_definitions(sniff PRIVATE SNIFF_VERSION="${PROJECT_VERSION}")
